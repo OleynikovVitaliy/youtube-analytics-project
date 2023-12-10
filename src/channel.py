@@ -76,4 +76,3 @@ class Channel:
                        "subscriberCount": self.subscriberCount,
                        "video_count": self.video_count,
                        "viewCount": self.viewCount}, write_file, indent=2, ensure_ascii=False, separators=(',', ': '))
-
