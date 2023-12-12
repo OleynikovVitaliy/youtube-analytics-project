@@ -5,8 +5,6 @@ import isodate
 from googleapiclient.discovery import build
 from isodate import parse_duration
 
-from helper.youtube_api_manual import youtube
-
 
 class PlayList:
     def __init__(self, playlist_id):
@@ -56,11 +54,11 @@ class PlayList:
         """
         Возвращает ссылку на самое популярное видео из плейлиста (по количеству лайков)
         """
-        playlist_videos = youtube.playlistItems().list(playlistId=self.playlist_id,
+        playlist_videos = self.youtube.playlistItems().list(playlistId=self.playlist_id,
                                                        part='contentDetails', maxResults=50).execute()
 
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
-        video_response = youtube.videos().list(part='contentDetails,statistics', id=','.join(video_ids)).execute()
+        video_response = self.youtube.videos().list(part='contentDetails,statistics', id=','.join(video_ids)).execute()
 
         video_like_count = 0
         video_url = ''
